@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "https://balasubramanim.github.io/meesho-frontend-challenge",
   "dependencies": {
-    "gh-pages": "^2.0.0",
     "history": "^4.3.0",
     "nprogress": "^0.2.0",
     "react": "^16.5.1",
@@ -30,12 +29,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
   "devDependencies": {
     "gh-pages": "^2.0.1"
   }
