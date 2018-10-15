@@ -17,15 +17,15 @@ const RedditList = props => {
         <div>
             {props.redditArr.map(article => {
                 return (
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-64x64">
+                    <div className="box" key={article.id}>
+                        <article className="media">
+                            <div className="media-left">
+                                <figure className="image is-64x64">
                                     <img src={article.image} alt="Article" />
                                 </figure>
                             </div>
-                            <div class="media-content">
-                                <div class="content">
+                            <div className="media-content">
+                                <div className="content">
                                     <p>
                                         <span className="subtitle">
                                             <strong>{article.title}</strong>
@@ -45,15 +45,15 @@ const RedditList = props => {
                                         </small>
                                     </p>
                                 </div>
-                                <nav class="level is-mobile article-meta">
-                                    <div class="level-left">
+                                <nav className="level is-mobile article-meta">
+                                    <div className="level-left">
                                         <a
-                                            class="level-item"
+                                            className="level-item"
                                             aria-label="reply"
                                         >
-                                            <span class="icon is-small">
+                                            <span className="icon is-small">
                                                 <i
-                                                    class="fas fa-angle-up"
+                                                    className="fas fa-angle-up"
                                                     aria-hidden="true"
                                                 />
                                             </span>
@@ -62,12 +62,12 @@ const RedditList = props => {
                                             &nbsp;Upvotes
                                         </a>
                                         <a
-                                            class="level-item"
+                                            className="level-item"
                                             aria-label="retweet"
                                         >
-                                            <span class="icon is-small">
+                                            <span className="icon is-small">
                                                 <i
-                                                    class="fas fa-comments"
+                                                    className="fas fa-comments"
                                                     aria-hidden="true"
                                                 />
                                             </span>
@@ -141,6 +141,7 @@ class Header extends React.Component {
             let data = this.props.data.data.children;
 
             result = data.map(value => ({
+                id: value.data.id,
                 title: value.data.title,
                 url: value.data.url,
                 image:

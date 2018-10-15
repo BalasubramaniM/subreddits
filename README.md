@@ -41,13 +41,15 @@ Finally,
 npm start
 ```
 
+(Enable CORS if you face any issue with Access-Control-Allow-Origin)
+
 ## Getting Started
 
 Open [localhost:3000](http://localhost:3000) file in your browser and see how Meesho subreddit app works.
 
 ## Demo
 
-Preview of the application can be found at [balsu.me/meesho-frontend-challenge](http://balsu.me/meesho-frontend-challenge/).
+Preview of the application can be found at [balsu.me/meesho-frontend-challenge](https://balsu.me/meesho-frontend-challenge/).
 
 ## Authors
 
