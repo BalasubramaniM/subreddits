@@ -1,0 +1,21 @@
+.m-select-box .subreddits {
+	max-width: 300px;
+	margin-top: 12px;
+}
+
+.m-data {
+	margin-top: 24px;
+}
+
+.m-data .title {
+	margin-top: 24px;
+}
+
+a {
+	color: #7a7a7a;
+}
+
+.m-data .article-meta,
+.m-data .article-author {
+	font-size: 12px;
+}
