@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
-import { promiseMiddleware } from "./middleware";
+import { promiseMiddleware, localStorageMiddleware } from "./middleware";
 import reducer from "./reducer";
 
 import { routerMiddleware } from "react-router-redux";
@@ -18,6 +18,7 @@ const getMiddleware = () => {
 		// Enable additional logging in non-production environments.
 		return applyMiddleware(
 			myRouterMiddleware,
+			localStorageMiddleware,
 			promiseMiddleware,
 			createLogger()
 		);

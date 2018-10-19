@@ -51,6 +51,7 @@ const ImageModel = props => {
 /**
  * RedditList Component
  * @param  {Object} props [Properties of a RedditList Component]
+ * @return Component.
  */
 const RedditList = props => {
     return (
@@ -132,58 +133,45 @@ const RedditList = props => {
     );
 };
 
+/**
+ * Pagination component.
+ * @param  {Object} props [Properties for Pagination component.]
+ * @return Component.
+ */
 const Pagination = props => {
-    if (props.pages > 1) {
-        let liString = [];
-        for (var i = 0; i < props.pages; i++) {
-            let iVal = i + 1; // Adding 1 due to pagination text, which can't start from 0.
-            if (i === props.pageIndex / 10) {
-                liString.push(
-                    <li key={iVal}>
-                        <a
-                            onClick={props.clickPage}
-                            className="pagination-link is-current"
-                        >
-                            {iVal}
-                        </a>
-                    </li>
-                );
-            } else {
-                liString.push(
-                    <li key={iVal}>
-                        <a
-                            onClick={props.clickPage}
-                            className="pagination-link"
-                        >
-                            {iVal}
-                        </a>
-                    </li>
-                );
-            }
-        }
-
-        return (
-            <ul id="pagination_list" className="pagination-list">
-                {liString}
-            </ul>
-        );
-    } else {
-        return (
-            <ul id="pagination_list" className="pagination-list">
-                <li>
+    let liString = [];
+    for (var i = 0; i < props.pages; i++) {
+        let iVal = i + 1; // Adding 1 due to pagination text, which can't start from 0.
+        if (i === props.pageIndex / 10) {
+            liString.push(
+                <li key={iVal}>
                     <a
                         onClick={props.clickPage}
                         className="pagination-link is-current"
                     >
-                        1
+                        {iVal}
                     </a>
                 </li>
-            </ul>
-        );
+            );
+        } else {
+            liString.push(
+                <li key={iVal}>
+                    <a onClick={props.clickPage} className="pagination-link">
+                        {iVal}
+                    </a>
+                </li>
+            );
+        }
     }
+
+    return (
+        <ul id="pagination_list" className="pagination-list">
+            {liString}
+        </ul>
+    );
 };
 
-class Header extends React.Component {
+class Home extends React.Component {
     constructor(props) {
         super(props);
 
@@ -207,6 +195,7 @@ class Header extends React.Component {
         this.setState({ image: null });
     };
 
+    // Click Page Function.
     clickPage = ev => {
         let pageClicked = (Number(ev.target.innerHTML) - 1) * 10;
 
@@ -346,4 +335,4 @@ class Header extends React.Component {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Header);
+)(Home);
