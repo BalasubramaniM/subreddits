@@ -19,3 +19,32 @@ a {
 .m-data .article-author {
 	font-size: 12px;
 }
+
+.paginate {
+	margin-top: 24px;
+}
+
+.hideOverflow {
+	overflow: hidden;
+}
+
+img {
+	cursor: pointer;
+}
+
+.maxWH {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto !important;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.viewPort {
+	width: 100vw;
+	height: 100vh;
+}

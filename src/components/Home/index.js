@@ -2,16 +2,56 @@ import React from "react";
 import { connect } from "react-redux";
 import Select from "react-select";
 import agent from "../../agent";
-import { CHANGE_SUBREDDIT } from "../../constants/actionTypes";
+import { CHANGE_SUBREDDIT, CHANGE_PAGE } from "../../constants/actionTypes";
 
 const mapStateToProps = state => ({
     ...state.common
 });
 
 const mapDispatchToProps = dispatch => ({
-    onChangeSubreddit: payload => dispatch({ type: CHANGE_SUBREDDIT, payload })
+    onChangeSubreddit: (key, payload) =>
+        dispatch({ type: CHANGE_SUBREDDIT, payload, key }),
+    onChangePage: pageIndex => dispatch({ type: CHANGE_PAGE, pageIndex })
 });
 
+/**
+ * ImageModel Component
+ * @param  {Object} props [Properties for ImageModel Component]
+ * @return Component.
+ */
+const ImageModel = props => {
+    const closeImageModal = () => {
+        props.closeImage();
+    };
+
+    if (props.value !== null) {
+        return (
+            <div className="modal is-active">
+                <div className="image">
+                    <div className="viewPort">
+                        <div
+                            onClick={closeImageModal}
+                            className="modal-background"
+                        />
+                        <img className="maxWH" src={props.value} alt="" />
+                    </div>
+                </div>
+                <button
+                    onClick={closeImageModal}
+                    className="modal-close is-large"
+                    aria-label="close"
+                />
+            </div>
+        );
+    } else {
+        return null;
+    }
+};
+
+/**
+ * RedditList Component
+ * @param  {Object} props [Properties of a RedditList Component]
+ */
 const RedditList = props => {
     return (
         <div>
@@ -20,8 +60,14 @@ const RedditList = props => {
                     <div className="box" key={article.id}>
                         <article className="media">
                             <div className="media-left">
-                                <figure className="image is-64x64">
-                                    <img src={article.image} alt="Article" />
+                                <figure className="image is-128x128 hideOverflow">
+                                    <img
+                                        onClick={() =>
+                                            props.onImageClick(article.image)
+                                        }
+                                        src={article.image}
+                                        alt="Article"
+                                    />
                                 </figure>
                             </div>
                             <div className="media-content">
@@ -86,79 +132,168 @@ const RedditList = props => {
     );
 };
 
-class Header extends React.Component {
-    changeSubreddit = ev => {
-        this.props.onChangeSubreddit(agent.Home.subreddit(ev.label));
-    };
-
-    render() {
-        const subredditsOptions = [
-            {
-                value: 0,
-                label: "alternativeart"
-            },
-            {
-                value: 1,
-                label: "pics"
-            },
-            {
-                value: 2,
-                label: "gifs"
-            },
-            {
-                value: 3,
-                label: "adviceanimals"
-            },
-            {
-                value: 4,
-                label: "cats"
-            },
-            {
-                value: 5,
-                label: "images"
-            },
-            {
-                value: 6,
-                label: "photoshopbattles"
-            },
-            {
-                value: 7,
-                label: "hmmm"
-            },
-            {
-                value: 8,
-                label: "all"
-            },
-            {
-                value: 9,
-                label: "aww"
+const Pagination = props => {
+    if (props.pages > 1) {
+        let liString = [];
+        for (var i = 0; i < props.pages; i++) {
+            let iVal = i + 1; // Adding 1 due to pagination text, which can't start from 0.
+            if (i === props.pageIndex / 10) {
+                liString.push(
+                    <li key={iVal}>
+                        <a
+                            onClick={props.clickPage}
+                            className="pagination-link is-current"
+                        >
+                            {iVal}
+                        </a>
+                    </li>
+                );
+            } else {
+                liString.push(
+                    <li key={iVal}>
+                        <a
+                            onClick={props.clickPage}
+                            className="pagination-link"
+                        >
+                            {iVal}
+                        </a>
+                    </li>
+                );
             }
-        ];
-
-        var result = [];
-
-        if (this.props.data !== null) {
-            let data = this.props.data.data.children;
-
-            result = data.map(value => ({
-                id: value.data.id,
-                title: value.data.title,
-                url: value.data.url,
-                image:
-                    value.data.thumbnail === "self"
-                        ? "https://bulma.io/images/placeholders/128x128.png"
-                        : value.data.thumbnail,
-                commentsCount: value.data.num_comments,
-                upvotes: value.data.ups,
-                author: value.data.author
-            }));
         }
 
+        return (
+            <ul id="pagination_list" className="pagination-list">
+                {liString}
+            </ul>
+        );
+    } else {
+        return (
+            <ul id="pagination_list" className="pagination-list">
+                <li>
+                    <a
+                        onClick={props.clickPage}
+                        className="pagination-link is-current"
+                    >
+                        1
+                    </a>
+                </li>
+            </ul>
+        );
+    }
+};
+
+class Header extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            image: null // Image state - Show | Hide.
+        };
+    }
+
+    // Dispatch action on change of Subreddit.
+    changeSubreddit = ev => {
+        this.props.onChangeSubreddit(ev.label, agent.Home.subreddit);
+    };
+
+    // On Click on Image in feed.
+    onImageClick = value => {
+        this.setState({ image: value });
+    };
+
+    // Close ImageModal.
+    onCloseImage = () => {
+        this.setState({ image: null });
+    };
+
+    clickPage = ev => {
+        let pageClicked = (Number(ev.target.innerHTML) - 1) * 10;
+
+        // this.setState({ pageIndex: pageClicked });
+        this.props.onChangePage(pageClicked);
+    };
+
+    /**
+     * Close Image on pressing ESC key.
+     * @param  {[type]} event [description]
+     * @return {[type]}       [description]
+     */
+    escFunction = event => {
+        if (event.keyCode === 27) {
+            this.setState({ image: null });
+        }
+    };
+
+    // Binding ESC key function
+    componentDidMount() {
+        document.addEventListener("keydown", this.escFunction);
+    }
+
+    // Remove event listener.
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.escFunction);
+    }
+
+    render() {
+        /**
+         * Check whether URL is an Image or not.
+         * @param  {String} url [URL of the image.]
+         * @return {Boolean}    [Type of URL - True | False]
+         */
+        const checkURL = url => {
+            return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+        };
+
+        var result = [];
         let redditBlock;
+        let pagination;
+
+        let result2 = this.props.data;
+
+        if (result2 !== null) {
+            let data = this.props.data.data.children;
+
+            result = data
+                .map(value => ({
+                    id: value.data.id,
+                    title: value.data.title,
+                    url: value.data.url,
+                    image: value.data.url,
+                    commentsCount: value.data.num_comments,
+                    upvotes: value.data.ups,
+                    author: value.data.author
+                }))
+                .filter(value => checkURL(value.url));
+
+            let pages = Math.ceil(result.length / 10);
+
+            pagination = (
+                <Pagination
+                    clickPage={this.clickPage}
+                    pages={pages}
+                    pageIndex={this.props.pageIndex}
+                />
+            );
+
+            if (result.length > 10) {
+                result = result.slice(
+                    this.props.pageIndex,
+                    this.props.pageIndex + 10
+                );
+            }
+        }
+
         if (result.length > 0) {
-            redditBlock = <RedditList redditArr={result} />;
+            redditBlock = (
+                <RedditList
+                    onImageClick={this.onImageClick}
+                    redditArr={result}
+                />
+            );
         } else {
             redditBlock = <div>Select subreddit to display posts ...</div>;
+            pagination = null;
         }
 
         return (
@@ -181,7 +316,7 @@ class Header extends React.Component {
                             <p className="subtitle">Select your subreddit</p>
                             <Select
                                 onChange={this.changeSubreddit}
-                                options={subredditsOptions}
+                                options={this.props.subreddits}
                                 id="subreddits"
                                 className="subreddits"
                             />
@@ -191,8 +326,18 @@ class Header extends React.Component {
                             <p className="subtitle">Posts</p>
                             {redditBlock}
                         </div>
+                        <nav
+                            className="pagination paginate"
+                            aria-label="pagination"
+                        >
+                            {pagination}
+                        </nav>
                     </div>
                 </section>
+                <ImageModel
+                    closeImage={this.onCloseImage}
+                    value={this.state.image}
+                />
             </div>
         );
     }
