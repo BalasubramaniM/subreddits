@@ -12,14 +12,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    onLoad: payload => dispatch({ type: APP_LOAD, payload, skipTracking: true })
+    onLoad: payload => dispatch({ type: APP_LOAD, payload })
 });
 
 class App extends React.Component {
-    componentWillMount() {
-        // this.props.onLoad(agent.Home.all());
-    }
-
     render() {
         return (
             <div>

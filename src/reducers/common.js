@@ -60,8 +60,7 @@ export default (state = defaultState, action) => {
         case APP_LOAD:
             return {
                 ...state,
-                appLoaded: true,
-                pageIndex: 0
+                appLoaded: true
             };
         case CHANGE_SUBREDDIT:
             return {

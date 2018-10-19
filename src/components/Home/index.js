@@ -225,6 +225,10 @@ class Home extends React.Component {
     }
 
     render() {
+        let result = [];
+        let redditBlock;
+        let pagination;
+
         /**
          * Check whether URL is an Image or not.
          * @param  {String} url [URL of the image.]
@@ -234,13 +238,7 @@ class Home extends React.Component {
             return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
         };
 
-        var result = [];
-        let redditBlock;
-        let pagination;
-
-        let result2 = this.props.data;
-
-        if (result2 !== null) {
+        if (this.props.data !== null) {
             let data = this.props.data.data.children;
 
             result = data
