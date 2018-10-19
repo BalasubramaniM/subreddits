@@ -255,13 +255,17 @@ class Home extends React.Component {
 
             let pages = Math.ceil(result.length / 10);
 
-            pagination = (
-                <Pagination
-                    clickPage={this.clickPage}
-                    pages={pages}
-                    pageIndex={this.props.pageIndex}
-                />
-            );
+            if (pages > 1) {
+                pagination = (
+                    <Pagination
+                        clickPage={this.clickPage}
+                        pages={pages}
+                        pageIndex={this.props.pageIndex}
+                    />
+                );
+            } else {
+                pagination = null;
+            }
 
             if (result.length > 10) {
                 result = result.slice(
