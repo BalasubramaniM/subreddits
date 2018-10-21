@@ -46,7 +46,7 @@ const promiseMiddleware = store => next => action => {
 const localStorageMiddleware = store => next => action => {
     let data = window.localStorage.getItem(action.key);
 
-    if (data) {
+    if (data !== null) {
         action.payload = JSON.parse(data);
     }
     next(action);
