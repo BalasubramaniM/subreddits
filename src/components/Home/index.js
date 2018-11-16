@@ -85,6 +85,7 @@ const RedditList = props => {
                                         <small>
                                             <a
                                                 target="_blank"
+                                                rel="noopener noreferrer"
                                                 href={article.url}
                                             >
                                                 {article.url}
@@ -94,7 +95,7 @@ const RedditList = props => {
                                 </div>
                                 <nav className="level is-mobile article-meta">
                                     <div className="level-left">
-                                        <a
+                                        <div
                                             className="level-item"
                                             aria-label="reply"
                                         >
@@ -107,8 +108,8 @@ const RedditList = props => {
                                             &nbsp;
                                             {article.upvotes}
                                             &nbsp;Upvotes
-                                        </a>
-                                        <a
+                                        </div>
+                                        <div
                                             className="level-item"
                                             aria-label="retweet"
                                         >
@@ -121,7 +122,7 @@ const RedditList = props => {
                                             &nbsp;
                                             {article.commentsCount}
                                             &nbsp;Comments
-                                        </a>
+                                        </div>
                                     </div>
                                 </nav>
                             </div>
