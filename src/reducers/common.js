@@ -49,7 +49,7 @@ const subredditsOptions = [
 ];
 
 const defaultState = {
-    appName: "Subreddits | Meesho",
+    appName: "Subreddits",
     appLoaded: false,
     data: null,
     subreddits: subredditsOptions
