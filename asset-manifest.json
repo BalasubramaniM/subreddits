@@ -1,4 +1,11 @@
 {
-  "main.js": "static/js/main.d95de19c.js",
-  "main.js.map": "static/js/main.d95de19c.js.map"
+  "main.js": "/subreddits/static/js/main.9329286c.chunk.js",
+  "main.js.map": "/subreddits/static/js/main.9329286c.chunk.js.map",
+  "static/js/1.a948dbf1.chunk.js": "/subreddits/static/js/1.a948dbf1.chunk.js",
+  "static/js/1.a948dbf1.chunk.js.map": "/subreddits/static/js/1.a948dbf1.chunk.js.map",
+  "runtime~main.js": "/subreddits/static/js/runtime~main.5a02265c.js",
+  "runtime~main.js.map": "/subreddits/static/js/runtime~main.5a02265c.js.map",
+  "index.html": "/subreddits/index.html",
+  "precache-manifest.8ca8b5fbd54a1da95b86f5d42d0f4599.js": "/subreddits/precache-manifest.8ca8b5fbd54a1da95b86f5d42d0f4599.js",
+  "service-worker.js": "/subreddits/service-worker.js"
 }
