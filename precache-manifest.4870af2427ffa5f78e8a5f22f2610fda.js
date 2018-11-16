@@ -12,7 +12,7 @@ self.__precacheManifest = [
     "url": "/subreddits/static/js/1.a948dbf1.chunk.js"
   },
   {
-    "revision": "20429af84e1c25985deb049d831351e3",
+    "revision": "98d578c6802158b4d7e7875dc26fb1a5",
     "url": "/subreddits/index.html"
   }
 ];
